@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lifadom School</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0b1f3a;
+      --gold: #c8972a;
+      --gold-light: #e8b84b;
+      --cream: #fdf8f0;
+      --white: #ffffff;
+      --gray: #6b7280;
+      --light-gray: #f3f4f6;
+      --accent: #1a4072;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      background: rgba(11,31,58,0.97);
+      backdrop-filter: blur(10px);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px; text-decoration: none;
+    }
+
+    .logo-emblem {
+      width: 44px; height: 44px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 18px;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    .logo-text { color: var(--white); }
+    .logo-text span { display: block; }
+    .logo-text .name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; letter-spacing: 0.5px; }
+    .logo-text .tagline { font-size: 10px; color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase; }
+
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none; font-size: 14px; font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: color 0.25s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px; background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      transition: background 0.25s !important;
+    }
+
+    .nav-cta:hover { background: var(--gold-light) !important; }
+    .nav-cta::after { display: none !important; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--accent) 60%, #0f2a50 100%);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 100px 5% 60px;
+    }
+
+    .hero-bg-pattern {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 80%, rgba(200,151,42,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(200,151,42,0.08) 0%, transparent 40%);
+    }
+
+    .hero-grid-lines {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image:
+        linear-gradient(0deg, rgba(255,255,255,0.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 680px;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(200,151,42,0.15);
+      border: 1px solid rgba(200,151,42,0.4);
+      color: var(--gold-light);
+      font-size: 12px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .hero-badge::before { content: '★'; font-size: 10px; }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+
+    h1 em { color: var(--gold-light); font-style: normal; display: block; }
+
+    .hero-desc {
+      font-size: 18px; font-weight: 300; line-height: 1.7;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      margin-bottom: 40px;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.45s ease both;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 14px 32px; border-radius: 6px;
+      font-size: 15px; font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 4px 24px rgba(200,151,42,0.4);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(200,151,42,0.5);
+    }
+
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,0.4);
+      color: var(--white);
+      padding: 14px 32px; border-radius: 6px;
+      font-size: 15px; font-weight: 600;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      background: rgba(200,151,42,0.1);
+    }
+
+    .hero-stats {
+      position: absolute; bottom: 50px; right: 5%;
+      display: flex; gap: 48px;
+      animation: fadeUp 0.8s 0.6s ease both;
+    }
+
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 700;
+      color: var(--gold-light);
+      display: block;
+    }
+
+    .stat-label { font-size: 12px; color: rgba(255,255,255,0.6); letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 90px 5%; }
+
+    .section-label {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px; color: var(--gray); line-height: 1.7; max-width: 560px;
+    }
+
+    /* ── ABOUT ── */
+    .about { background: var(--white); }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+      margin-top: 60px;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-img-placeholder {
+      width: 100%; aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--navy), var(--accent));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-img-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .about-icon-large {
+      font-size: 80px; opacity: 0.6;
+    }
+
+    .about-badge {
+      position: absolute; bottom: -20px; right: -20px;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 20px 24px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(200,151,42,0.4);
+    }
+
+    .about-badge strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; font-weight: 900;
+    }
+
+    .about-badge span { font-size: 12px; font-weight: 600; }
+
+    .values-list { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+
+    .value-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 16px 20px;
+      background: var(--light-gray);
+      border-radius: 8px;
+      border-left: 4px solid var(--gold);
+      transition: transform 0.2s;
+    }
+
+    .value-item:hover { transform: translateX(4px); }
+
+    .value-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .value-item h4 { font-weight: 600; margin-bottom: 4px; }
+    .value-item p { font-size: 14px; color: var(--gray); }
+
+    /* ── PROGRAMS ── */
+    .programs { background: var(--cream); }
+
+    .programs-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; margin-bottom: 48px; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    }
+
+    .card-top {
+      height: 6px;
+      background: linear-gradient(90deg, var(--navy), var(--gold));
+    }
+
+    .card-body { padding: 28px; }
+
+    .card-icon {
+      width: 52px; height: 52px;
+      background: rgba(11,31,58,0.07);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+      margin-bottom: 10px; color: var(--navy);
+    }
+
+    .card p { font-size: 14px; color: var(--gray); line-height: 1.7; margin-bottom: 18px; }
+
+    .card-link {
+      color: var(--gold); font-size: 14px; font-weight: 600;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: gap 0.2s;
+    }
+
+    .card-link:hover { gap: 10px; }
+
+    /* ── ADMISSIONS ── */
+    .admissions { background: var(--navy); color: var(--white); }
+
+    .admissions .section-title { color: var(--white); }
+    .admissions .section-sub { color: rgba(255,255,255,0.65); }
+
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 32px; margin-top: 56px;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -18px; top: 24px;
+      color: var(--gold); font-size: 20px;
+    }
+
+    .step-num {
+      width: 52px; height: 52px;
+      background: var(--gold);
+      color: var(--navy);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 900;
+      margin: 0 auto 16px;
+    }
+
+    .step h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .step p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--white); }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start;
+      margin-top: 56px;
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 28px; }
+
+    .info-item {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+
+    .info-icon {
+      width: 44px; height: 44px;
+      background: var(--navy);
+      color: var(--gold);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+
+    .info-item h4 { font-weight: 600; margin-bottom: 4px; }
+    .info-item a { color: var(--gold); text-decoration: none; font-size: 15px; }
+    .info-item a:hover { text-decoration: underline; }
+    .info-item p { font-size: 14px; color: var(--gray); }
+
+    /* ── FORM ── */
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    .field label {
+      font-size: 13px; font-weight: 600; color: var(--navy); letter-spacing: 0.3px;
+    }
+
+    .field input, .field textarea, .field select {
+      border: 1.5px solid #e0e3e9;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px; color: var(--navy);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .field input:focus, .field textarea:focus, .field select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,151,42,0.12);
+    }
+
+    .field textarea { resize: vertical; min-height: 130px; }
+
+    .form-submit {
+      background: var(--navy);
+      color: var(--white);
+      border: none; border-radius: 8px;
+      padding: 14px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
+    }
+
+    .form-submit:hover { background: var(--accent); transform: translateY(-2px); }
+
+    .form-success {
+      display: none;
+      background: rgba(200,151,42,0.1);
+      border: 1.5px solid var(--gold);
+      color: var(--navy);
+      padding: 14px 20px; border-radius: 8px;
+      font-weight: 600; font-size: 15px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #06121f;
+      color: rgba(255,255,255,0.7);
+      padding: 60px 5% 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+
+    .footer-brand .logo-text .name { font-size: 18px; }
+    .footer-brand p { margin-top: 16px; font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.55); }
+
+    .footer-col h5 {
+      color: var(--gold-light);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--gold-light); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+      font-size: 13px; color: rgba(255,255,255,0.4);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE NAV ── */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 70px; left: 0; width: 100%;
+      background: var(--navy); z-index: 999;
+      flex-direction: column; padding: 24px 5%;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-size: 16px; font-weight: 500;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .hero-stats { position: static; margin-top: 48px; justify-content: center; }
+      .hero { flex-direction: column; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-badge { bottom: -12px; right: 12px; }
+
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+
+      .step:not(:last-child)::after { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 64px 5%; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero-stats { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="logo-emblem">L</div>
+    <div class="logo-text">
+      <span class="name">Lifadom School</span>
+      <span class="tagline">Excellence in Education</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#admissions">Admissions</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Apply Now</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#programs" onclick="closeMobile()">Programs</a>
+  <a href="#admissions" onclick="closeMobile()">Admissions</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="#contact" onclick="closeMobile()" style="color:var(--gold-light);font-weight:700;">Apply Now →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Nurturing Future Leaders</div>
+    <h1>Where Knowledge<em>Meets Ambition</em></h1>
+    <p class="hero-desc">
+      Lifadom School is a centre of academic excellence, dedicated to shaping well-rounded,
+      confident, and compassionate individuals ready for the future.
+    </p>
+    <div class="hero-btns">
+      <a href="#admissions" class="btn-primary">Explore Admissions</a>
+      <a href="#programs" class="btn-outline">Our Programs</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">1,200+</span><span class="stat-label">Students</span></div>
+    <div class="stat"><span class="stat-num">98%</span><span class="stat-label">Pass Rate</span></div>
+    <div class="stat"><span class="stat-num">120+</span><span class="stat-label">Staff</span></div>
+    <div class="stat"><span class="stat-num">20+</span><span class="stat-label">Years</span></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-visual fade-in">
+      <div class="about-img-placeholder">
+        <div class="about-icon-large">🏛️</div>
+      </div>
+      <div class="about-badge">
+        <strong>20+</strong>
+        <span>Years of Excellence</span>
+      </div>
+    </div>
+    <div class="fade-in">
+      <span class="section-label">About Us</span>
+      <h2 class="section-title">Building the Leaders of Tomorrow</h2>
+      <p class="section-sub">
+        Lifadom School offers a holistic, world-class education that combines rigorous academics
+        with character development, creativity, and community service. Our dedicated educators
+        inspire every student to reach their full potential.
+      </p>
+      <div class="values-list">
+        <div class="value-item">
+          <div class="value-icon">🎓</div>
+          <div>
+            <h4>Academic Excellence</h4>
+            <p>A challenging curriculum that pushes every student to achieve their personal best.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🤝</div>
+          <div>
+            <h4>Character & Values</h4>
+            <p>Instilling integrity, respect, and compassion in everything we do.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🌍</div>
+          <div>
+            <h4>Global Perspective</h4>
+            <p>Preparing students to thrive in a diverse and interconnected world.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="programs-header">
+    <div class="fade-in">
+      <span class="section-label">Academic Programmes</span>
+      <h2 class="section-title">What We Offer</h2>
+    </div>
+    <a href="#contact" class="btn-primary fade-in">Enquire Today</a>
+  </div>
+  <div class="cards-grid">
+    <div class="card fade-in">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-icon">🌱</div>
+        <h3>Early Years</h3>
+        <p>A nurturing foundation for children aged 3–6, focused on play-based learning, curiosity, and social development.</p>
+        <a href="#contact" class="card-link">Learn more →</a>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-icon">📚</div>
+        <h3>Primary School</h3>
+        <p>Engaging core subjects in English, Mathematics, Sciences and Arts for ages 6–12, building strong academic habits.</p>
+        <a href="#contact" class="card-link">Learn more →</a>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-icon">🔬</div>
+        <h3>Junior Secondary</h3>
+        <p>An enriched programme for ages 12–15 featuring STEM, humanities, arts, and leadership development opportunities.</p>
+        <a href="#contact" class="card-link">Learn more →</a>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-icon">🏆</div>
+        <h3>Senior Secondary</h3>
+        <p>Rigorous preparation for national and international examinations with expert subject teachers and career counselling.</p>
+        <a href="#contact" class="card-link">Learn more →</a>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-icon">⚽</div>
+        <h3>Co-curricular</h3>
+        <p>Sports, music, drama, debate, coding clubs and more — ensuring students develop beyond the classroom.</p>
+        <a href="#contact" class="card-link">Learn more →</a>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-top"></div>
+      <div class="card-body">
+        <div class="card-icon">💡</div>
+        <h3>Special Support</h3>
+        <p>Dedicated learning support services tailored to each student's unique needs and learning style.</p>
+        <a href="#contact" class="card-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMISSIONS -->
+<section class="admissions" id="admissions">
+  <div style="text-align:center; max-width: 600px; margin: 0 auto;" class="fade-in">
+    <span class="section-label" style="color:var(--gold-light)">Join Our Community</span>
+    <h2 class="section-title">How to Apply</h2>
+    <p class="section-sub" style="margin:0 auto;">
+      We welcome applications from families who share our values of excellence, integrity, and lifelong learning.
+      Enrolment is open year-round — here's how it works:
+    </p>
+  </div>
+  <div class="steps-row">
+    <div class="step fade-in">
+      <div class="step-num">1</div>
+      <h4>Submit Enquiry</h4>
+      <p>Complete our online enquiry form or contact us directly to express your interest.</p>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">2</div>
+      <h4>School Tour</h4>
+      <p>Visit our campus, meet our staff, and see our facilities first-hand.</p>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">3</div>
+      <h4>Assessment</h4>
+      <p>Students complete a friendly, age-appropriate entry assessment.</p>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">4</div>
+      <h4>Offer & Enrolment</h4>
+      <p>Receive your offer letter and complete enrolment paperwork.</p>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:48px;" class="fade-in">
+    <a href="#contact" class="btn-primary" style="font-size:16px; padding:16px 40px;">Apply Now</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="fade-in">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-title">Contact Us</h2>
+    <p class="section-sub">Have a question or ready to begin your journey with Lifadom School? We'd love to hear from you.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info fade-in">
+      <div class="info-item">
+        <div class="info-icon">✉️</div>
+        <div>
+          <h4>Email Us</h4>
+          <a href="mailto:info@lifadomschool.com">info@lifadomschool.com</a>
+          <p>We aim to respond within 24 hours.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <h4>Our Location</h4>
+          <p>14 Admiralty Way, Lekki Phase 1<br/>Lagos, Nigeria 106104</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🕐</div>
+        <div>
+          <h4>Office Hours</h4>
+          <p>Monday – Friday: 7:30 AM – 5:00 PM<br/>Saturday: 9:00 AM – 12:00 PM</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div>
+          <h4>Phone</h4>
+          <a href="tel:+2348031475629">+234 803 147 5629</a>
+          <p>Call us during office hours.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-in">
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="field">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="e.g. John" required />
+          </div>
+          <div class="field">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="e.g. Doe" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="subject">Subject</label>
+          <select id="subject">
+            <option value="">Select a topic…</option>
+            <option>Admissions Enquiry</option>
+            <option>Programme Information</option>
+            <option>School Tour</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell us how we can help…" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+        <div class="form-success" id="formSuccess">
+          ✅ Thank you! Your message has been sent. We'll be in touch soon.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="margin-bottom:0">
+        <div class="logo-emblem">L</div>
+        <div class="logo-text">
+          <span class="name" style="color:#fff">Lifadom School</span>
+          <span class="tagline">Excellence in Education</span>
+        </div>
+      </a>
+      <p>Shaping confident, compassionate, and capable leaders for a better tomorrow.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#programs">Programmes</a></li>
+        <li><a href="#admissions">Admissions</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Programmes</h5>
+      <ul>
+        <li><a href="#programs">Early Years</a></li>
+        <li><a href="#programs">Primary School</a></li>
+        <li><a href="#programs">Junior Secondary</a></li>
+        <li><a href="#programs">Senior Secondary</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="mailto:info@lifadomschool.com">info@lifadomschool.com</a></li>
+        <li><a href="#">14 Admiralty Way, Lekki Phase 1, Lagos</a></li>
+        <li><a href="tel:+2348031475629">+234 803 147 5629</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Lifadom School. All rights reserved.</span>
+    <span>Designed with ❤️ for education</span>
+  </div>
+</footer>
+
+<script>
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  // Scroll reveal
+  const faders = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  faders.forEach(el => observer.observe(el));
+
+  // Navbar scroll effect
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 20
+      ? '0 4px 30px rgba(0,0,0,0.4)'
+      : '0 2px 20px rgba(0,0,0,0.3)';
+  });
+
+  // Contact form
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.form-submit');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }, 1000);
+  });
+</script>
+</body>
+</html>
