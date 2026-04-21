@@ -204,6 +204,56 @@
       animation: fadeUp 0.8s 0.6s ease both;
     }
 
+    /* ── HERO IMAGE ── */
+    .hero-image-col {
+      position: relative; z-index: 2;
+      animation: fadeUp 0.8s 0.3s ease both;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .hero-img-frame {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .hero-img-frame img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+
+    .hero-img-frame::before {
+      content: '';
+      position: absolute;
+      inset: -12px -12px 12px 12px;
+      border: 2px solid rgba(200,151,42,0.4);
+      border-radius: 20px;
+      z-index: -1;
+    }
+
+    .hero-img-badge {
+      position: absolute;
+      bottom: -20px; left: -20px;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 16px 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(200,151,42,0.45);
+      text-align: center;
+    }
+
+    .hero-img-badge strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 900;
+    }
+
+    .hero-img-badge span { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+
     .stat { text-align: center; }
     .stat-num {
       font-family: 'Playfair Display', serif;
@@ -368,10 +418,17 @@
     .admissions .section-sub { color: rgba(255,255,255,0.65); }
 
     .steps-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 32px; margin-top: 56px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 56px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
     }
+
+    .step { width: 180px; }
 
     .step {
       text-align: center;
